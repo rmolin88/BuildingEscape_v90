@@ -25,7 +25,7 @@ void UDoorOpener::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (fMassAtSpotlight > fTriggerMass)
+	if (GetMassOfOverlappingActors() < fTriggerMass)
 	{
 		if (fDoorAngle > 0)
 			SetDoorAngle(--fDoorAngle);
@@ -79,13 +79,29 @@ float UDoorOpener::GetMassOfOverlappingActors(void)
 
 	// Get all overlapping actors
 	pPressurePlate->GetOverlappingActors(OverlappingActors);
-
-	for (auto* pActor : OverlappingActors)
+	float fTotalMass = 0;
+	for (const auto* pActor : OverlappingActors)
 	{
-		if (pActor)
-			UE_LOG(LogTemp, Warning, TEXT("%s inside spotlight"), *pActor->GetName())
+		if (pActor == nullptr)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Failed to pointer to actor in array"))
+			continue;
+		}
+
+		UE_LOG(LogTemp, Display, TEXT("%s inside spotlight"), *pActor->GetName())
+
+		UPrimitiveComponent* pActorPrimComp = nullptr;
+		pActorPrimComp = Cast<UPrimitiveComponent>(pActor->GetRootComponent());
+		if (pActorPrimComp == nullptr)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Failed to get mass"))
+			continue;
+		}
+
+		UE_LOG(LogTemp, Display, TEXT("Mass = %f"), pActorPrimComp->GetMass())
+		fTotalMass += pActorPrimComp->GetMass();
 	}
 
-	return 80.f;
+	return fTotalMass;
 }
 
