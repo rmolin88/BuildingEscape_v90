@@ -7,8 +7,7 @@
 #include "DoorOpener.generated.h"
 
 // These statments do need the semicolons at the end
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpenRequest);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCloseRequest);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDoorEvent);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BUILDINGESCAPE_V90_API UDoorOpener : public UActorComponent
@@ -25,19 +24,17 @@ class BUILDINGESCAPE_V90_API UDoorOpener : public UActorComponent
 	AActor *pActorParent = nullptr;
 
 	float fDistanceToPoint;
-	float fDoorAngle;
 	float fMassAtSpotlight = 0;
 	TArray<AActor *> OverlappingActors;
 
-	void SetDoorAngle(float fAngle);
 	bool CheckSpotlight(void);
 	float GetMassOfOverlappingActors(void);
 
 	UPROPERTY(BlueprintAssignable)
-	FOnOpenRequest OnOpenRequest;
+	FDoorEvent OnOpenRequest;
 
 	UPROPERTY(BlueprintAssignable)
-	FOnCloseRequest OnCloseRequest;
+	FDoorEvent OnCloseRequest;
 
   public:
 	// Sets default values for this component's properties
@@ -50,3 +47,4 @@ class BUILDINGESCAPE_V90_API UDoorOpener : public UActorComponent
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction *ThisTickFunction) override;
 };
+

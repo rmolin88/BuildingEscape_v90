@@ -26,28 +26,9 @@ void UDoorOpener::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	if (GetMassOfOverlappingActors() < fTriggerMass)
-	{  // Open Door
-		OnCloseRequest.Broadcast();
-		// if (fDoorAngle > 0)
-		// SetDoorAngle(--fDoorAngle);
-	}
+		OnCloseRequest.Broadcast();  // Trigger Blueprint event to open the door nicely
 	else
-	{  // Close Door
-		OnOpenRequest.Broadcast();
-		// if (fDoorAngle < fDoorOpenAngle)
-		// SetDoorAngle(++fDoorAngle);
-	}
-}
-
-void UDoorOpener::SetDoorAngle(float fAngle)
-{
-	if (pActorParent == nullptr)
-	{
-		UE_LOG(LogTemp, Error, TEXT("SetDoorAngle(): Failed to load pActorParent"))
-		return;
-	}
-
-	pActorParent->SetActorRotation(FRotator(0, fAngle, 0));
+		OnOpenRequest.Broadcast();  // Trigger Blueprint event to close the door
 }
 
 bool UDoorOpener::CheckSpotlight(void)
