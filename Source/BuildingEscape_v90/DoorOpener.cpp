@@ -26,14 +26,16 @@ void UDoorOpener::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	if (GetMassOfOverlappingActors() < fTriggerMass)
-	{
-		if (fDoorAngle > 0)
-			SetDoorAngle(--fDoorAngle);
+	{  // Open Door
+		OnCloseRequest.Broadcast();
+		// if (fDoorAngle > 0)
+		// SetDoorAngle(--fDoorAngle);
 	}
 	else
-	{
-		if (fDoorAngle < fDoorOpenAngle)
-			SetDoorAngle(++fDoorAngle);
+	{  // Close Door
+		OnOpenRequest.Broadcast();
+		// if (fDoorAngle < fDoorOpenAngle)
+		// SetDoorAngle(++fDoorAngle);
 	}
 }
 

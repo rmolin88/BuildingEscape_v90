@@ -6,6 +6,10 @@
 #include "Components/ActorComponent.h"
 #include "DoorOpener.generated.h"
 
+// These statments do need the semicolons at the end
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpenRequest);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCloseRequest);
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BUILDINGESCAPE_V90_API UDoorOpener : public UActorComponent
 {
@@ -31,6 +35,12 @@ class BUILDINGESCAPE_V90_API UDoorOpener : public UActorComponent
 	void SetDoorAngle(float fAngle);
 	bool CheckSpotlight(void);
 	float GetMassOfOverlappingActors(void);
+
+	UPROPERTY(BlueprintAssignable)
+	FOnOpenRequest OnOpenRequest;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnCloseRequest OnCloseRequest;
 
   public:
 	// Sets default values for this component's properties
