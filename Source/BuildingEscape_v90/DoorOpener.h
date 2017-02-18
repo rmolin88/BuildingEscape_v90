@@ -20,9 +20,6 @@ class BUILDINGESCAPE_V90_API UDoorOpener : public UActorComponent
 	                                           // So that it can be loaded from
 	                                           // editor. It also easier to adjust from editor than in code.
 	UPROPERTY(EditAnywhere)
-	float fDoorOpenAngle = 100;  // How far out will the door open
-
-	UPROPERTY(EditAnywhere)
 	float fTriggerMass = 100;  // Total mass that will trigger the doors to open
 
 	AActor *pActorParent = nullptr;
@@ -53,4 +50,3 @@ class BUILDINGESCAPE_V90_API UDoorOpener : public UActorComponent
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction *ThisTickFunction) override;
 };
-
